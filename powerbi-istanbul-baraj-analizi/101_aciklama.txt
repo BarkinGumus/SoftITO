@@ -1,0 +1,67 @@
+İSTANBUL BARAJLARI - POWER BI ANALİZİ (Öğrenci kodu: 101)
+==========================================================
+
+ÖNERME
+------
+"İstanbul barajları her yıl en düşük seviyesine sonbaharda (Eylül–Aralık) iner."
+Önceki pandas ödevinde 2001–2023 arasındaki 23 tam yılın 18'inde (%78,3) dip
+Eylül–Aralık'ta çıkmıştı. Bu raporda aynı sonuç Power BI ile yeniden hesaplandı
+ve yağış ile tüketim verisi eklenerek nedeni gösterildi: yazın yağış azalırken
+tüketim zirve yapar ve doluluk sonbahara kadar düşmeye devam eder.
+
+VERİ SETLERİ (İBB Açık Veri Portalı)
+-----------------------------------
+1. istanbul-dams-daily-occupancy-rates.xlsx
+   10 barajın günlük doluluk oranı (0–1), 23.10.2000 – 19.02.2024, 8.520 satır.
+2. istanbul-barajlarnda-ya-ve-gunluk-tuketim-verileri.xlsx
+   Barajlara düşen günlük yağış (baraj bazında) ve İstanbul günlük su tüketimi (m³/gün).
+
+POWER QUERY DÖNÜŞÜMLERİ
+-----------------------
+Fact_Doluluk
+  - Tarih sütunu Date.From(_, "tr-TR") ile dönüştürüldü (1 Nisan – 8 Ağustos 2023
+    arasındaki 130 satırda tarih "1.4.2023" gibi metin olarak girilmişti).
+  - Boş gelen Column12 kaldırıldı, baraj sütunları unpivot edildi (Tarih, Baraj, Doluluk).
+  - Aynı 130 satırda oranlar yüzde olarak girildiği için 100'e bölündü.
+Fact_Yagis
+  - Baraj sütunları unpivot edildi (Tarih, Baraj, Yağış).
+  - Türkçe karaktersiz baraj adları (Darlik, B.çekmece, ıstırancalar…) doluluk
+    verisindeki adlarla (Darlık, Büyükçekmece, Istrancalar…) eşlendi.
+Fact_Tuketim
+  - Yağış dosyasından yalnızca Tarih ve günlük tüketim sütunu alındı (Tarih, Tüketim).
+Dim_Baraj
+  - Fact_Doluluk'tan benzersiz barajlar + Yaka sütunu
+    (Ömerli, Darlık, Elmalı = Anadolu; diğerleri = Avrupa).
+
+VERİ MODELİ (fact constellation)
+--------------------------------
+Boyutlar : Dim_Tarih (DAX, 2000–2024; Yıl, Ay No, Ay, Dönem; tarih tablosu olarak
+           işaretli, Ay sütunu Ay No'ya göre sıralı), Dim_Baraj
+Olgular  : Fact_Doluluk, Fact_Yagis, Fact_Tuketim
+İlişkiler: Dim_Tarih[Date] -> üç olgu tablosu; Dim_Baraj[Baraj] -> Fact_Doluluk ve
+           Fact_Yagis. Hepsi bire çok (1:*), tek yönlü.
+
+ÖLÇÜLER (DAX)
+-------------
+Ortalama Doluluk        : AVERAGE(Fact_Doluluk[Doluluk])
+Ortalama Günlük Yağış   : AVERAGE(Fact_Yagis[Yağış])
+Ortalama Günlük Tüketim : AVERAGE(Fact_Tuketim[Tüketim])
+Dip Ay No               : Seçili dönemde ortalama doluluğun en düşük olduğu günün ayı
+Sonbaharda Dip Oranı    : 2001–2023 tam yıllarından dip ayı >= 9 olanların oranı
+Dip Renk                : Dip ayı Eylül–Aralık ise turuncu, değilse mavi (koşullu renk)
+
+RAPOR SAYFASI
+-------------
+- Önerme metin kutusu
+- Kart: Sonbaharda Dip Oranı = %78,26 (23 yılın 18'i)
+- Aylara göre yağış (sütun) + doluluk (çizgi, ikincil eksen): yağış Temmuz–Ağustos'ta
+  en düşük, doluluk Nisan'da zirve, Ekim–Kasım'da dip
+- Aylara göre günlük tüketim: Temmuz–Ağustos'ta zirve
+- Yıllara göre dip ayı (turuncu = Eylül–Aralık): 18 turuncu, 5 mavi
+- Yakaya göre aylık doluluk: Anadolu ve Avrupa yakasında da dip sonbaharda
+
+SONUÇ
+-----
+Önerme desteklenir: 2001–2023 arasındaki 23 yılın 18'inde (%78,3) barajlar en düşük
+seviyesine Eylül–Aralık arasında indi. Yaz aylarında yağışın en az, tüketimin en
+fazla olması doluluğun sonbahara kadar düşmesini açıklıyor.
