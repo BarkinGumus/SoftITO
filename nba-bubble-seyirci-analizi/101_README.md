@@ -1,6 +1,6 @@
 # Seyirci Gerçekten Maç Kazandırır mı? NBA Bubble ve Ev Sahibi Avantajı
 
-SoftITO Veri Analitiği eğitimi bitirme projesi, Bölüm A. *(Çalışma devam ediyor: Power BI dashboard eklenecek.)*
+SoftITO Veri Analitiği eğitimi bitirme projesi, Bölüm A.
 
 ## Soru
 
@@ -59,7 +59,9 @@ NBA'de ev sahibi avantajının ne kadarı seyirciden geliyor?
 
 - `101_bubble_seyirci.ipynb`: analiz notebook'u
 - `home_win_rate_by_season.png`: sezonlara göre ev sahibi kazanma oranı grafiği
+- `101-nba-bubble-dashboard.pbix`: Power BI dashboard (2 sayfa: "Ev Sahibi Avantajı" trendleri ve "Seyirci Etkisi" model sonuçları)
+- `powerbi/`: dashboard'un kullandığı CSV dosyaları (notebook'un son hücresi üretir)
 
 ## Kullanılan araçlar
 
-pandas, NumPy, matplotlib, scikit-learn, statsmodels
+pandas, NumPy, matplotlib, scikit-learn, statsmodels, Power BI
