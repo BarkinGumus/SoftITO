@@ -56,6 +56,10 @@ Bir NBA oyuncusu draft edildiğinde, şampiyon olduğunda, MVP seçildiğinde ya
 - `data/names_all.csv.gz`: birleştirilmiş SSA isim verisi
 - `images/`: notebook'un ürettiği grafikler
 
+## Makale
+
+Bu proje hakkında yazdığım Medium yazısı: [Kobe Etkisi: NBA yıldızları bebek isimlerini değiştiriyor mu?](https://medium.com/@barkingumus56/kobe-etkisi-nba-y%C4%B1ld%C4%B1zlar%C4%B1-bebek-isimlerini-de%C4%9Fi%C5%9Ftiriyor-mu-de5f608bf349)
+
 ## Kullanılan araçlar
 
 pandas, NumPy, matplotlib
