@@ -62,6 +62,10 @@ NBA'de ev sahibi avantajının ne kadarı seyirciden geliyor?
 - `101-nba-bubble-dashboard.pbix`: Power BI dashboard (2 sayfa: "Ev Sahibi Avantajı" trendleri ve "Seyirci Etkisi" model sonuçları)
 - `powerbi/`: dashboard'un kullandığı CSV dosyaları (notebook'un son hücresi üretir)
 
+## Makale
+
+Bu projede data leakage'ı nasıl önlediğimi anlattığım Medium yazısı: [Modelim %62 doğrulukla çalışıyor ve bununla gurur duyuyorum](https://medium.com/@barkingumus56/modelim-62-do%C4%9Frulukla-%C3%A7al%C4%B1%C5%9F%C4%B1yor-ve-bununla-gurur-duyuyorum-01e3208afde3)
+
 ## Kullanılan araçlar
 
 pandas, NumPy, matplotlib, scikit-learn, statsmodels, Power BI
